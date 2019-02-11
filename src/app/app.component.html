@@ -1,7 +1,13 @@
-<ul>
+<!-- <ul>
   <li class="text" *ngFor="let chat of (chats | async)">
     <span *ngIf="chat.msg"> {{ chat.msg }} </span>
   </li>
-</ul>
+</ul> -->
+
+<div class="container main-container">
+  <div class="chat-window">
+    <app-chat></app-chat>
+  </div>
+</div>
 
 <router-outlet></router-outlet>
