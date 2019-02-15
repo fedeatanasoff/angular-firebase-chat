@@ -1,11 +1,11 @@
 <h1>firebase chat</h1>
 
 <div class="app-mensajes" id="app-mensajes">
-  <div class="text-right">
-    <span class="badge badge-success">Federico</span>
-    <p>este es un msj del chat</p>
+  <div class="text-right" *ngFor="let chat of chatService.chats">
+    <span class="badge badge-success">user</span>
+    <p>{{ chat.msg }}</p>
   </div>
-  <div class="text-left">
+  <!-- <div class="text-left">
     <span class="badge badge-primary">Daniel</span>
     <p>este es un msj del chat</p>
   </div>
@@ -24,7 +24,13 @@
   <div class="text-left">
     <span class="badge badge-primary">Daniel</span>
     <p>este es un msj del chat</p>
-  </div>
+  </div> -->
 </div>
-<input type="text" name="mensaje" class="form-control" [(ngModel)]="mensaje" (keyup.enter)="enviarMsg()" placeholder="enviar mensaje"/>
-
+<input
+  type="text"
+  name="mensaje"
+  class="form-control"
+  [(ngModel)]="mensaje"
+  (keyup.enter)="enviarMsg()"
+  placeholder="enviar mensaje"
+/>
