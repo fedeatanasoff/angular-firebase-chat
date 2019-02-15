@@ -10,6 +10,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { environment } from '../environments/environment';
 import { ChatComponent } from './components/chat/chat.component';
+import { ChatService } from './services/chat.service';
 
 @NgModule({
   declarations: [AppComponent, ChatComponent],
@@ -21,7 +22,7 @@ import { ChatComponent } from './components/chat/chat.component';
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule // imports firebase/auth, only needed for auth features,
   ],
-  providers: [],
+  providers: [ChatService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
