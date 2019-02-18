@@ -6,6 +6,8 @@ import {
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Mensaje } from '../interfaces/mensaje';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { auth } from 'firebase/app';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +15,36 @@ import { Mensaje } from '../interfaces/mensaje';
 export class ChatService {
   private itemsCollection: AngularFirestoreCollection<Mensaje>;
   chats: Mensaje[] = [];
+  usuario: any = {};
 
-  constructor(private afs: AngularFirestore) {}
+  constructor(
+    private afs: AngularFirestore,
+    private authService: AngularFireAuth
+  ) {
+    this.authService.authState.subscribe(user => {
+      console.log('estado del usuario =>', user);
+
+      if (!user) {
+        return;
+      }
+
+      this.usuario = {
+        nombre: user.displayName,
+        uid: user.uid,
+        email: user.email,
+        foto: user.photoURL
+      };
+
+      console.log('usuario logeado =>', this.usuario);
+    });
+  }
+
+  login(proveedor: string) {
+    this.authService.auth.signInWithPopup(new auth.GoogleAuthProvider());
+  }
+  logout() {
+    this.authService.auth.signOut();
+  }
 
   cargarChats() {
     this.itemsCollection = this.afs.collection<Mensaje>('chats', ref =>
