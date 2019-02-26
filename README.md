@@ -1,5 +1,21 @@
 # ChatAngularFirebase
 
+Para el funcionamiento de esta app congigurar el archivo enviroments.ts y colocar los datos de su app en firebase
+
+```
+export const environment = {
+  production: false,
+  firebase: {
+    apiKey: "",
+    authDomain: "",
+    databaseURL: "",
+    projectId: "",
+    storageBucket: "",
+    messagingSenderId: ""
+  }
+};
+```
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.4.
 
 ## Development server
