@@ -1,14 +1,19 @@
-<!-- <ul>
-  <li class="text" *ngFor="let chat of (chats | async)">
-    <span *ngIf="chat.msg"> {{ chat.msg }} </span>
-  </li>
-</ul> -->
-
 <div class="container main-container">
-  <div class="chat-window">
-    <app-login></app-login>
-    <!-- <app-chat></app-chat> -->
+  <div class="row" *ngIf="chatService.usuario.uid">
+    <div class="col-md-4">
+      <div class="chat-window">
+        <app-chat></app-chat>
+      </div>
+      <div class="text-center mt-3">
+        <button class="btn btn-danger" (click)="chatService.logout()">
+          Cerrar Sesion
+        </button>
+      </div>
+    </div>
   </div>
+
+  <div class="row"></div>
+  <app-login *ngIf="!chatService.usuario.uid"></app-login>
 </div>
 
 <router-outlet></router-outlet>

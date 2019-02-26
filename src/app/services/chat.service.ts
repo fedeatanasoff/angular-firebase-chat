@@ -1,16 +1,16 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 import {
   AngularFirestore,
   AngularFirestoreCollection
-} from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { Mensaje } from '../interfaces/mensaje';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { auth } from 'firebase/app';
+} from "@angular/fire/firestore";
+import { Observable } from "rxjs";
+import { map } from "rxjs/operators";
+import { Mensaje } from "../interfaces/mensaje";
+import { AngularFireAuth } from "@angular/fire/auth";
+import { auth } from "firebase/app";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class ChatService {
   private itemsCollection: AngularFirestoreCollection<Mensaje>;
@@ -22,7 +22,7 @@ export class ChatService {
     private authService: AngularFireAuth
   ) {
     this.authService.authState.subscribe(user => {
-      console.log('estado del usuario =>', user);
+      console.log("estado del usuario =>", user);
 
       if (!user) {
         return;
@@ -35,7 +35,7 @@ export class ChatService {
         foto: user.photoURL
       };
 
-      console.log('usuario logeado =>', this.usuario);
+      console.log("usuario logeado =>", this.usuario);
     });
   }
 
@@ -43,17 +43,18 @@ export class ChatService {
     this.authService.auth.signInWithPopup(new auth.GoogleAuthProvider());
   }
   logout() {
+    this.usuario = {};
     this.authService.auth.signOut();
   }
 
   cargarChats() {
-    this.itemsCollection = this.afs.collection<Mensaje>('chats', ref =>
-      ref.orderBy('fecha', 'desc').limit(5)
+    this.itemsCollection = this.afs.collection<Mensaje>("chats", ref =>
+      ref.orderBy("fecha", "desc").limit(25)
     );
 
     return this.itemsCollection.valueChanges().pipe(
       map((mensajes: Mensaje[]) => {
-        console.log('mensaje desde servicio', mensajes);
+        console.log("mensaje desde servicio", mensajes);
         this.chats = [];
 
         for (const mensaje of mensajes) {
@@ -68,9 +69,10 @@ export class ChatService {
   agregarMensaje(texto: string) {
     // TODO falta el UID
     const mensaje: Mensaje = {
-      nombre: 'Test1',
+      nombre: this.usuario.nombre,
       msg: texto,
-      fecha: new Date().getTime()
+      fecha: new Date().getTime(),
+      uid: this.usuario.uid
     };
 
     return this.itemsCollection.add(mensaje);

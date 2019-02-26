@@ -1,11 +1,23 @@
 <h1>firebase chat</h1>
 
 <div class="app-mensajes" id="app-mensajes">
-  <div class="text-right" *ngFor="let chat of chatService.chats">
-    <span class="badge badge-success">user</span>
+  <div
+    *ngFor="let chat of chatService.chats"
+    [ngClass]="{
+      'text-right': chatService.usuario.uid === chat.uid,
+      'text-left': chatService.usuario.uid !== chat.uid
+    }"
+  >
+    <span
+      class="badge "
+      [ngClass]="{
+        'badge-primary': chatService.usuario.uid === chat.uid,
+        'badge-success': chatService.usuario.uid !== chat.uid
+      }"
+      >{{ chat.nombre }}</span
+    >
     <p>{{ chat.msg }}</p>
   </div>
-
 </div>
 <input
   type="text"
